@@ -1,0 +1,32 @@
+body {
+    background-color: #f7e6c3; /* A soft beige color for a warm feel */
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.app-container {
+    max-width: 1200px; /* Center the app content */
+    margin: auto;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.8); /* White background for content with some transparency */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+/* Add styles for the card components */
+mat-card {
+    background-color: #ffffff; /* White background for cards */
+    border-radius: 8px; /* Rounded corners */
+    margin-bottom: 20px; /* Spacing between cards */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Shadow for card */
+}
+
+mat-button {
+    background-color: #e0c097; /* Light brown color for buttons */
+    color: #fff; /* White text */
+}
+
+mat-button:hover {
+    background-color: #d1b08f; /* Darker brown on hover */
+}
