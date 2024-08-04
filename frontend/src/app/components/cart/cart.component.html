@@ -1,0 +1,9 @@
+<mat-card>
+    <mat-card-title>Your Cart</mat-card-title>
+    <div *ngFor="let item of cartItems" class="cart-item">
+        <h4>{{ item.bread.name }} ({{ item.quantity }})</h4>
+        <p>Price: {{ item.bread.price | currency }} | Total: {{ item.bread.price * item.quantity | currency }}</p>
+    </div>
+    <mat-divider></mat-divider>
+    <h4>Total: {{ total | currency }}</h4>
+</mat-card>

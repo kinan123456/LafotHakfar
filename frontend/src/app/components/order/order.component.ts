@@ -10,12 +10,13 @@ import { MatListModule } from '@angular/material/list';
 import { MatSelectModule } from '@angular/material/select';
 import { CommonModule } from '@angular/common';
 import { Bread } from '../../models/bread';
+import { CartComponent } from '../cart/cart.component';
 
 @Component({
     selector: 'app-order',
     templateUrl: './order.component.html',
     standalone: true,
-    imports: [MatListModule, MatCardModule, MatFormFieldModule, MatInputModule, MatOptionModule, MatSelectModule, FormsModule, CommonModule],
+    imports: [MatListModule, MatCardModule, MatFormFieldModule, MatInputModule, MatOptionModule, MatSelectModule, FormsModule, CommonModule, CartComponent],
     providers: [OrderService],
     styleUrls: ['./order.component.css']
 })
@@ -50,9 +51,18 @@ export class OrderComponent implements OnInit {
         }
     }
 
-    addToCart(): void {
+    addToCart(bread: Bread): void {
         if (this.selectedBread.quantity > 0) {
-            this.cart.push({ ...this.selectedBread });
+            const existingItem = this.cart.find(item => item.bread.id === this.selectedBread.bread.id);
+
+            if (existingItem) {
+                // If bread is already in the cart, increase the quantity
+                existingItem.quantity += this.selectedBread.quantity;
+            } else {
+                // Otherwise, add the new bread item to the cart
+                this.cart.push({ ...this.selectedBread });
+            }
+
             this.resetSelection();
         }
     }
