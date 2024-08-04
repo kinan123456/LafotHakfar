@@ -1,0 +1,21 @@
+.scrollable-menu {
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden; /* Hide horizontal overflow */
+    overflow-y: auto; /* Allow vertical scrolling if needed */
+    white-space: nowrap; /* Prevent items from wrapping to the next line */
+    width: 200px; /* Set the width of the sidenav */
+}
+
+.scrollable-menu mat-list-item {
+    display: inline-block; /* Allow items to be inline for scrolling */
+    min-width: 100px; /* Minimum width for items */
+}
+
+mat-sidenav {
+    width: 250px; /* Width of the sidenav */
+}
+
+mat-sidenav-content {
+    margin-left: 250px; /* Adjust content margin */
+}
