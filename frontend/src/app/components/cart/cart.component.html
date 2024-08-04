@@ -1,11 +1,32 @@
 <mat-card>
     <mat-card-title>Your Cart</mat-card-title>
     <div *ngFor="let item of cartItems" class="cart-item">
-        <h4>{{ item.bread.name }} ({{ item.quantity }})</h4>
+        <h4>{{ item.bread.name }}</h4>
         <p>Price: {{ item.bread.price | currency }} | Total: {{ item.bread.price * item.quantity | currency }}</p>
+        <div class="quantity-controls">
+            <button mat-icon-button (click)="decreaseQuantity(item.bread.id)" [disabled]="item.quantity <= 1">-</button>
+            <span>{{ item.quantity }}</span>
+            <button mat-icon-button (click)="increaseQuantity(item.bread.id)">+</button>
+        </div>
         <button mat-button color="warn" (click)="removeItem(item.bread.id)">Remove</button>
     </div>
     <mat-divider></mat-divider>
     <h4>Total: {{ total | currency }}</h4>
-    <button mat-raised-button (click)="goBackToShopping()">Continue Shopping</button>
+
+    <h3>Checkout</h3>
+    <form (ngSubmit)="checkout()" class="checkout-form">
+        <mat-form-field class="full-width">
+            <mat-label>Name</mat-label>
+            <input matInput [(ngModel)]="name" name="name" required>
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+            <mat-label>Phone Number</mat-label>
+            <input matInput [(ngModel)]="phone" name="phone" required pattern="[0-9]*">
+        </mat-form-field>
+
+        <button mat-raised-button type="submit" class="full-width">Checkout</button>
+    </form>
+
+    <button mat-raised-button (click)="goBackToShopping()" class="full-width">Continue Shopping</button>
 </mat-card>
