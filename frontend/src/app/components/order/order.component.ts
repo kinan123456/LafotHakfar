@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Order } from '../../models/order';
 import { OrderService } from '../../services/order.service';
 import { FormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
@@ -10,25 +9,29 @@ import { MatListModule } from '@angular/material/list';
 import { MatSelectModule } from '@angular/material/select';
 import { CommonModule } from '@angular/common';
 import { Bread } from '../../models/bread';
-import { CartComponent } from '../cart/cart.component';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { CartNotificationComponent } from '../cart-notification/cart-notification.component';
 import { Router } from '@angular/router';
+import { CartService } from '../../services/cart.service';
 
 @Component({
     selector: 'app-order',
     templateUrl: './order.component.html',
     standalone: true,
-    imports: [MatListModule,MatCardModule, MatFormFieldModule, MatInputModule, MatOptionModule, MatSelectModule, FormsModule, MatDialogModule, CommonModule, CartComponent],
+    imports: [MatListModule, MatCardModule, MatFormFieldModule, MatInputModule, MatOptionModule, MatSelectModule, FormsModule, CommonModule],
     providers: [OrderService],
     styleUrls: ['./order.component.css']
 })
 export class OrderComponent implements OnInit {
     breads: Bread[] = [];
-    cart: { bread: Bread, quantity: number }[] = [];
     selectedBread: { bread: Bread; quantity: number } = { bread: { id: '', name: '', image: '', price: 0 }, quantity: 0 };
 
-    constructor(private orderService: OrderService, private dialog: MatDialog, private router: Router) {}
+    constructor(
+        private orderService: OrderService,
+        private dialog: MatDialog,
+        private router: Router,
+        private cartService: CartService
+    ) {}
 
     ngOnInit(): void {
         this.loadBreads();
@@ -56,16 +59,7 @@ export class OrderComponent implements OnInit {
 
     addToCart(): void {
         if (this.selectedBread.quantity > 0) {
-            const existingItem = this.cart.find(item => item.bread.id === this.selectedBread.bread.id);
-
-            if (existingItem) {
-                // If bread is already in the cart, increase the quantity
-                existingItem.quantity += this.selectedBread.quantity;
-            } else {
-                // Otherwise, add the new bread item to the cart
-                this.cart.push({ ...this.selectedBread });
-            }
-
+            this.cartService.addToCart(this.selectedBread.bread, this.selectedBread.quantity); // Use the service to add items
             this.openCartNotification();
             this.resetSelection();
         }
@@ -87,10 +81,6 @@ export class OrderComponent implements OnInit {
 
     resetSelection(): void {
         this.selectedBread = { bread: { id: '', name: '', image: '', price: 0 }, quantity: 0 };
-    }
-
-    onCartUpdated(updatedCart: { bread: Bread; quantity: number }[]): void {
-        this.cart = updatedCart;
     }
 
     // Method to calculate total price for the selected bread and quantity

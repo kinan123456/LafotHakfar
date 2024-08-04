@@ -1,8 +1,8 @@
-// src/app/components/cart/cart.component.ts
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
+import { CartService } from '../../services/cart.service';
 
 @Component({
     selector: 'app-cart',
@@ -11,16 +11,22 @@ import { MatDividerModule } from '@angular/material/divider';
     templateUrl: './cart.component.html',
     styleUrls: ['./cart.component.css']
 })
-export class CartComponent {
-    @Input() cartItems: { bread: any; quantity: number }[] = [];
-    @Output() cartUpdated = new EventEmitter<{ bread: any; quantity: number }[]>();
+export class CartComponent implements OnInit {
+    cartItems: { bread: any; quantity: number }[] = [];
+
+    constructor(private cartService: CartService) {}
+
+    ngOnInit(): void {
+        this.cartService.cartItems$.subscribe(items => {
+            this.cartItems = items; // Subscribe to cart items
+        });
+    }
 
     get total() {
         return this.cartItems.reduce((acc, item) => acc + (item.bread.price * item.quantity), 0);
     }
 
     removeItem(breadId: string): void {
-        this.cartItems = this.cartItems.filter(item => item.bread.id !== breadId);
-        this.cartUpdated.emit(this.cartItems); // Emit the updated cart items
+        this.cartService.removeFromCart(breadId); // Use the service to remove items
     }
 }
