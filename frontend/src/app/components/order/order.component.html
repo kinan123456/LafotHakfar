@@ -1,0 +1,17 @@
+<mat-card>
+    <mat-card-title>Select Breads</mat-card-title>
+    <div class="bread-list">
+        <div *ngFor="let bread of breads" class="bread-item">
+            <img [src]="bread.image" alt="{{ bread.name }}" />
+            <h4>{{ bread.name }}</h4>
+            <p>Price: {{ bread.price | currency }}</p>
+            <div class="quantity-controls">
+                <button mat-icon-button (click)="decreaseQuantity(bread)" [disabled]="selectedBread.bread.id !== bread.id || selectedBread.quantity <= 0">-</button>
+                <span>{{ selectedBread.bread.id === bread.id ? selectedBread.quantity : 0 }}</span>
+                <button mat-icon-button (click)="increaseQuantity(bread)">+</button>
+            </div>
+            <p *ngIf="selectedBread.bread.id === bread.id">Total Price: {{ totalPrice | currency }}</p>
+            <button mat-raised-button (click)="selectedBread.bread = bread; addToCart()">Add to Cart</button>
+        </div>
+    </div>
+</mat-card>

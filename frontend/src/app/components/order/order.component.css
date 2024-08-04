@@ -1,0 +1,26 @@
+.bread-list {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.bread-item {
+    flex: 1 1 30%;
+    margin: 10px;
+    text-align: center;
+}
+
+.bread-item img {
+    width: 100px;
+    height: auto;
+    border-radius: 8px;
+}
+
+.quantity-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.quantity-controls button {
+    margin: 0 5px;
+}
