@@ -1,0 +1,13 @@
+<h2 mat-dialog-title>
+    Item Added to Cart
+    <button class="close-button" mat-icon-button (click)="dialogRef.close()">
+        <mat-icon>close</mat-icon>
+    </button>
+</h2>
+<mat-dialog-content>
+    <p>Your item has been added to the cart.</p>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-button (click)="navigateToCart()">Navigate to Cart</button>
+    <button mat-button (click)="stayOnPage()">Stay on This Page</button>
+</mat-dialog-actions>
