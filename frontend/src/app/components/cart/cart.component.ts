@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 import { CartService } from '../../services/cart.service';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-cart',
@@ -14,7 +15,7 @@ import { CartService } from '../../services/cart.service';
 export class CartComponent implements OnInit {
     cartItems: { bread: any; quantity: number }[] = [];
 
-    constructor(private cartService: CartService) {}
+    constructor(private cartService: CartService, private router: Router) {}
 
     ngOnInit(): void {
         this.cartService.cartItems$.subscribe(items => {
@@ -28,5 +29,9 @@ export class CartComponent implements OnInit {
 
     removeItem(breadId: string): void {
         this.cartService.removeFromCart(breadId); // Use the service to remove items
+    }
+
+    goBackToShopping(): void {
+        this.router.navigate(['/orders']); // Navigate to the orders/homepage
     }
 }
