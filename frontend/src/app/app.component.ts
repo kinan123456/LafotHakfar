@@ -14,5 +14,7 @@ import { RouterOutlet } from '@angular/router';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'frontend';
+  toggleSidenav(sidenav: any) {
+    sidenav.toggle(); // Open or close the sidenav
+  }
 }

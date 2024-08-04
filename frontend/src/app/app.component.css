@@ -1,20 +1,32 @@
+.sidenav-container {
+    height: 100%; /* Full height for the container */
+}
+
+.sidenav {
+    width: 250px; /* Fixed width for the sidenav */
+}
+
 .scrollable-menu {
     display: flex;
     flex-direction: column;
-    overflow-y: auto; /* Allow vertical scrolling if needed */
-    width: 100%; /* Set to 100% to take full width */
-    max-width: 250px; /* Optional max-width */
-}
-
-.scrollable-menu mat-list-item {
-    min-width: 100%; /* Minimum width for items to take full width */
-}
-
-mat-sidenav {
-    width: 100%; /* Set width to 100% to be responsive */
-    max-width: 250px; /* Optional max-width */
+    overflow-y: auto; /* Allow vertical scrolling */
 }
 
 mat-sidenav-content {
-    margin-left: 0; /* Remove fixed margin */
+    transition: margin 0.3s ease; /* Smooth transition */
+}
+
+mat-sidenav.opened + mat-sidenav-content {
+    margin-left: 250px; /* Shift content when sidenav is open */
+}
+
+/* Responsive Styles for Different Screen Sizes */
+@media (max-width: 600px) {
+    .sidenav {
+        width: 100%; /* Full width on small screens */
+    }
+
+    mat-sidenav.opened + mat-sidenav-content {
+        margin-left: 0; /* No margin on small screens */
+    }
 }
