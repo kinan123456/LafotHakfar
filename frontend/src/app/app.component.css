@@ -1,21 +1,20 @@
 .scrollable-menu {
     display: flex;
     flex-direction: column;
-    overflow-x: hidden; /* Hide horizontal overflow */
     overflow-y: auto; /* Allow vertical scrolling if needed */
-    white-space: nowrap; /* Prevent items from wrapping to the next line */
-    width: 200px; /* Set the width of the sidenav */
+    width: 100%; /* Set to 100% to take full width */
+    max-width: 250px; /* Optional max-width */
 }
 
 .scrollable-menu mat-list-item {
-    display: inline-block; /* Allow items to be inline for scrolling */
-    min-width: 100px; /* Minimum width for items */
+    min-width: 100%; /* Minimum width for items to take full width */
 }
 
 mat-sidenav {
-    width: 250px; /* Width of the sidenav */
+    width: 100%; /* Set width to 100% to be responsive */
+    max-width: 250px; /* Optional max-width */
 }
 
 mat-sidenav-content {
-    margin-left: 250px; /* Adjust content margin */
+    margin-left: 0; /* Remove fixed margin */
 }

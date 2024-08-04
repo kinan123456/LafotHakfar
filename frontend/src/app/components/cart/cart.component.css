@@ -1,10 +1,19 @@
 .cart-item {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-between; /* Space items */
     align-items: center;
     margin-bottom: 10px;
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
 }
 
 button {
     margin-left: 10px;
+    flex: 1; /* Button takes available space */
+}
+
+@media (max-width: 600px) {
+    .cart-item {
+        flex-direction: column; /* Stack items on smaller screens */
+        align-items: flex-start; /* Align items to the start */
+    }
 }
