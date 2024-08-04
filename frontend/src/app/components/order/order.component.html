@@ -11,9 +11,9 @@
                 <button mat-icon-button (click)="increaseQuantity(bread)">+</button>
             </div>
             <p *ngIf="selectedBread.bread.id === bread.id">Total Price: {{ totalPrice | currency }}</p>
-            <button mat-raised-button (click)="addToCart(bread);">Add to Cart</button>
+            <button mat-raised-button (click)="selectedBread.bread = bread; addToCart()">Add to Cart</button>
         </div>
     </div>
 </mat-card>
 
-<app-cart [cartItems]="cart"></app-cart>
+<app-cart [cartItems]="cart" (cartUpdated)="onCartUpdated($event)"></app-cart>

@@ -51,7 +51,7 @@ export class OrderComponent implements OnInit {
         }
     }
 
-    addToCart(bread: Bread): void {
+    addToCart(): void {
         if (this.selectedBread.quantity > 0) {
             const existingItem = this.cart.find(item => item.bread.id === this.selectedBread.bread.id);
 
@@ -69,6 +69,10 @@ export class OrderComponent implements OnInit {
 
     resetSelection(): void {
         this.selectedBread = { bread: { id: '', name: '', image: '', price: 0 }, quantity: 0 };
+    }
+
+    onCartUpdated(updatedCart: { bread: Bread; quantity: number }[]): void {
+        this.cart = updatedCart;
     }
 
     // Method to calculate total price for the selected bread and quantity

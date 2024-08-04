@@ -3,6 +3,7 @@
     <div *ngFor="let item of cartItems" class="cart-item">
         <h4>{{ item.bread.name }} ({{ item.quantity }})</h4>
         <p>Price: {{ item.bread.price | currency }} | Total: {{ item.bread.price * item.quantity | currency }}</p>
+        <button mat-button color="warn" (click)="removeItem(item.bread.id)">Remove</button>
     </div>
     <mat-divider></mat-divider>
     <h4>Total: {{ total | currency }}</h4>
