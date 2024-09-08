@@ -1,0 +1,25 @@
+.checkout-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Space between fields */
+    margin-bottom: 20px; /* Space before buttons */
+}
+
+.full-width {
+    width: 100%; /* Ensure full width for fields and buttons */
+}
+
+.cart-item {
+    margin-bottom: 10px; /* Space between cart items */
+}
+
+/* Optional: Add some responsiveness */
+@media (max-width: 600px) {
+    mat-card {
+        margin: 10px; /* Add margin on smaller screens */
+    }
+
+    .checkout-form {
+        gap: 10px; /* Adjust gap for smaller screens */
+    }
+}

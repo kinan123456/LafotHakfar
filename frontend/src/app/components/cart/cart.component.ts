@@ -4,14 +4,11 @@ import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 import { CartService } from '../../services/cart.service';
 import { Router } from '@angular/router';
-import { FormsModule } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
 
 @Component({
     selector: 'app-cart',
     standalone: true,
-    imports: [MatDividerModule, MatCardModule, CommonModule, FormsModule, MatFormFieldModule, MatInputModule],
+    imports: [MatDividerModule, MatCardModule, CommonModule],
     templateUrl: './cart.component.html',
     styleUrls: ['./cart.component.css']
 })
@@ -48,17 +45,11 @@ export class CartComponent implements OnInit {
         this.router.navigate(['/orders']);
     }
 
-    checkout(): void {
-        if (!this.name || !this.phone) {
-            alert('Please fill out all fields.');
+    goToCheckout(): void {
+        if (this.cartItems.length === 0) {
+            alert('Your cart is empty. Please add items before proceeding to checkout.');
             return;
         }
-
-        const message = `Order received for ${this.name}. Total: ${this.total}. Thank you!`;
-        this.cartService.sendSms(this.phone, message);
-        this.cartService.clearCart();
-
-        alert('Your order has been placed and a confirmation SMS will be sent to you.');
-        this.goBackToShopping();
+        this.router.navigate(['/checkout']);
     }
 }
