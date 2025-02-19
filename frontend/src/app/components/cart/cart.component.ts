@@ -41,6 +41,10 @@ export class CartComponent implements OnInit {
         }
     }
 
+    getTotalPrice(item: { bread: any; quantity: number }): number {
+        return item.bread.price * item.quantity;
+    }
+
     increaseQuantity(breadId: string): void {
         const item = this.cartItems.find(item => item.bread.id === breadId);
         if (item) {

@@ -10,8 +10,9 @@
         <mat-card>
             <mat-card-content>
                 <h3>{{ item.bread.name }}</h3>
-                <p>Price: ${{ item.bread.price }}</p>
                 <p>Quantity: {{ item.quantity }}</p>
+                <p>Price per unit: {{ item.bread.price | currency }}</p>
+                <p>Total Price: {{ getTotalPrice(item) | currency }}</p>
                 <button (click)="increaseQuantity(item.bread.id)">+</button>
                 <button (click)="decreaseQuantity(item.bread.id)">-</button>
                 <button class="remove" (click)="removeItem(item.bread.id)">Remove</button>
