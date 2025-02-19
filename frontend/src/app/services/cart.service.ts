@@ -1,17 +1,19 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { CartItem } from '../models/cart-item';
+import { Bread } from '../models/bread';
 
 @Injectable({
     providedIn: 'root'
 })
 export class CartService {
-    private cartItems: { bread: any; quantity: number }[] = this.loadCart();
-    private readonly cartItemsSubject = new BehaviorSubject<{ bread: any; quantity: number }[]>(this.cartItems);
+    private cartItems: CartItem[] = this.loadCart();
+    private readonly cartItemsSubject = new BehaviorSubject<CartItem[]>(this.cartItems);
     readonly cartItems$ = this.cartItemsSubject.asObservable();
 
     constructor() {}
 
-    private loadCart(): { bread: any; quantity: number }[] {
+    private loadCart(): CartItem[] {
         const storedCart = localStorage.getItem('cart');
         return storedCart ? JSON.parse(storedCart) : [];
     }
@@ -20,7 +22,7 @@ export class CartService {
         localStorage.setItem('cart', JSON.stringify(this.cartItems));
     }
 
-    addToCart(bread: any, quantity: number): void {
+    addToCart(bread: Bread, quantity: number): void {
         const existingItem = this.cartItems.find(item => item.bread.id === bread.id);
         if (existingItem) {
             existingItem.quantity += quantity;
@@ -53,9 +55,5 @@ export class CartService {
         localStorage.removeItem('cart');
     }
 
-    sendSms(phone: string, message: string): void {
-        // this.http.post('https://your-backend-api.com/send-sms', { phone, message })
-        //     .subscribe(response => console.log('SMS sent successfully:', response),
-        //                error => console.error('SMS sending failed:', error));
-    }
+    sendSms(phone: string, message: string): void { }
 }

@@ -6,6 +6,7 @@ import { CartService } from '../../services/cart.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { FormsModule } from '@angular/forms';
+import { CartItem } from '../../models/cart-item';
 
 @Component({
     selector: 'app-cart',
@@ -15,13 +16,11 @@ import { FormsModule } from '@angular/forms';
     styleUrls: ['./cart.component.css']
 })
 export class CartComponent implements OnInit {
-    cartItems: { bread: any; quantity: number }[] = [];
-    name: string = '';
-    phone: string = '';
+    cartItems: CartItem[] = [];
     discountCode: string = '';
     discountApplied: boolean = false;
 
-    constructor(private cartService: CartService, private router: Router, private toastr: ToastrService) {}
+    constructor(private cartService: CartService, readonly router: Router, private toastr: ToastrService) {}
 
     ngOnInit(): void {
         this.cartService.cartItems$.subscribe(items => {
@@ -29,19 +28,12 @@ export class CartComponent implements OnInit {
         });
     }
 
-    get total() {
+    get total(): number {
         let total = this.cartItems.reduce((acc, item) => acc + (item.bread.price * item.quantity), 0);
         return this.discountApplied ? total * 0.9 : total;
     }
 
-    removeItem(breadId: string): void {
-        if (confirm('Are you sure you want to remove this item?')) {
-            this.cartService.removeFromCart(breadId);
-            this.toastr.success('Item removed from cart!', 'Success');
-        }
-    }
-
-    getTotalPrice(item: { bread: any; quantity: number }): number {
+    getTotalPrice(item: CartItem): number {
         return item.bread.price * item.quantity;
     }
 
@@ -63,6 +55,13 @@ export class CartComponent implements OnInit {
         }
     }
 
+    removeItem(breadId: string): void {
+        if (confirm('Are you sure you want to remove this item?')) {
+            this.cartService.removeFromCart(breadId);
+            this.toastr.success('Item removed from cart!', 'Success');
+        }
+    }
+
     applyDiscount(): void {
         if (this.discountCode === 'DISCOUNT10') {
             this.discountApplied = true;
@@ -70,10 +69,6 @@ export class CartComponent implements OnInit {
         } else {
             this.toastr.error('Invalid discount code!', 'Error');
         }
-    }
-
-    goBackToShopping(): void {
-        this.router.navigate(['/orders']);
     }
 
     goToCheckout(): void {
