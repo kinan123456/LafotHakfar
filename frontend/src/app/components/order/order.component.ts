@@ -9,10 +9,8 @@ import { MatListModule } from '@angular/material/list';
 import { MatSelectModule } from '@angular/material/select';
 import { CommonModule } from '@angular/common';
 import { Bread } from '../../models/bread';
-import { MatDialog } from '@angular/material/dialog';
-import { CartNotificationComponent } from '../cart-notification/cart-notification.component';
-import { Router } from '@angular/router';
 import { CartService } from '../../services/cart.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
     selector: 'app-order',
@@ -24,17 +22,17 @@ import { CartService } from '../../services/cart.service';
 })
 export class OrderComponent implements OnInit {
     breads: Bread[] = [];
-    selectedBread: { bread: Bread; quantity: number } = { bread: { id: '', name: '', image: '', price: 0 }, quantity: 0 };
+    selectedBreads: { [breadId: string]: number } = {}; // Track selected bread quantities
 
     constructor(
         private orderService: OrderService,
-        private dialog: MatDialog,
-        private router: Router,
-        private cartService: CartService
+        private cartService: CartService,
+        private toastr: ToastrService
     ) {}
 
     ngOnInit(): void {
         this.loadBreads();
+        this.loadSelectedBreads();
     }
 
     loadBreads(): void {
@@ -43,48 +41,49 @@ export class OrderComponent implements OnInit {
         });
     }
 
-    increaseQuantity(bread: Bread): void {
-        if (this.selectedBread.bread.id === bread.id) {
-            this.selectedBread.quantity++;
-        } else {
-            this.selectedBread = { bread, quantity: 1 }; // Reset quantity for a new bread selection
+    loadSelectedBreads(): void {
+        const storedSelection = localStorage.getItem('selectedBreads');
+        if (storedSelection) {
+            this.selectedBreads = JSON.parse(storedSelection);
         }
+    }
+
+    saveSelectedBreads(): void {
+        localStorage.setItem('selectedBreads', JSON.stringify(this.selectedBreads));
+    }
+
+    increaseQuantity(bread: Bread): void {
+        if (!this.selectedBreads[bread.id]) {
+            this.selectedBreads[bread.id] = 1;
+        } else {
+            this.selectedBreads[bread.id]++;
+        }
+        this.saveSelectedBreads();
     }
 
     decreaseQuantity(bread: Bread): void {
-        if (this.selectedBread.bread.id === bread.id && this.selectedBread.quantity > 0) {
-            this.selectedBread.quantity--;
-        }
-    }
-
-    addToCart(): void {
-        if (this.selectedBread.quantity > 0) {
-            this.cartService.addToCart(this.selectedBread.bread, this.selectedBread.quantity); // Use the service to add items
-            this.openCartNotification();
-            this.resetSelection();
-        }
-    }
-
-    openCartNotification(): void {
-        const dialogRef = this.dialog.open(CartNotificationComponent, {
-            width: '400px', // Set the width of the dialog
-            panelClass: 'custom-dialog-container', // Apply custom styles
-            disableClose: true // Prevent closing the dialog by clicking outside
-        });
-
-        dialogRef.afterClosed().subscribe(result => {
-            if (result === 'navigate') {
-                this.router.navigate(['/cart']); // Navigate to cart page
+        if (this.selectedBreads[bread.id] && this.selectedBreads[bread.id] > 0) {
+            this.selectedBreads[bread.id]--;
+            if (this.selectedBreads[bread.id] === 0) {
+                delete this.selectedBreads[bread.id];
             }
-        });
+            this.saveSelectedBreads();
+        }
     }
 
-    resetSelection(): void {
-        this.selectedBread = { bread: { id: '', name: '', image: '', price: 0 }, quantity: 0 };
+    addToCart(bread: Bread): void {
+        const quantity = this.selectedBreads[bread.id] || 0;
+        if (quantity > 0) {
+            this.cartService.addToCart(bread, quantity);
+            this.toastr.success(`${quantity} x ${bread.name} added to cart!`);
+            delete this.selectedBreads[bread.id];
+            this.saveSelectedBreads();
+        } else {
+            this.toastr.warning('Please select a quantity before adding.');
+        }
     }
 
-    // Method to calculate total price for the selected bread and quantity
-    get totalPrice(): number {
-        return this.selectedBread.bread.price * this.selectedBread.quantity;
+    getTotalPrice(bread: Bread): number {
+        return (this.selectedBreads[bread.id] || 0) * bread.price;
     }
 }

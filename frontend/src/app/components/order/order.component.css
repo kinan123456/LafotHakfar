@@ -1,18 +1,22 @@
 .bread-list {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center; /* Center items in the container */
+    justify-content: center;
+    gap: 15px;
 }
 
 .bread-item {
-    flex: 1 1 calc(33.33% - 20px); /* Responsive item size */
-    margin: 10px; /* Space between items */
+    flex: 1 1 calc(25% - 20px);
+    max-width: 250px;
     text-align: center;
-    max-width: 100%; /* Prevent overflow */
+    background: white;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .bread-item img {
-    width: 100%; /* Responsive image size */
+    width: 100%;
     height: auto;
     border-radius: 8px;
 }
@@ -21,8 +25,15 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    margin: 10px 0;
 }
 
 .quantity-controls button {
     margin: 0 5px;
+}
+
+@media (max-width: 768px) {
+    .bread-item {
+        flex: 1 1 calc(50% - 10px);
+    }
 }
