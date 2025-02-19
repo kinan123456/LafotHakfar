@@ -1,23 +1,51 @@
-<mat-card>
-    <div *ngFor="let item of cartItems" class="cart-item">
-        <h4>{{ item.bread.name }} ({{ item.quantity }})</h4>
-        <p>Price: {{ item.bread.price | currency }} | Total: {{ item.bread.price * item.quantity | currency }}</p>
+<mat-card class="checkout-container">
+    <h2>Checkout</h2>
+
+    <div *ngIf="cartItems.length === 0" class="empty-cart">
+        <p>Your cart is empty. Redirecting to orders page...</p>
     </div>
+
+    <div *ngFor="let item of cartItems" class="cart-item">
+        <h4>{{ item.bread.name }} (x{{ item.quantity }})</h4>
+        <p>Price: {{ item.bread.price | currency }}</p>
+        <p>Total: {{ item.bread.price * item.quantity | currency }}</p>
+    </div>
+
     <mat-divider></mat-divider>
+
     <h4>Total: {{ total | currency }}</h4>
 
-    <form (ngSubmit)="checkout()" class="checkout-form">
+    <form [formGroup]="checkoutForm" (ngSubmit)="checkout()" class="checkout-form">
         <mat-form-field class="full-width">
             <mat-label>Name</mat-label>
-            <input matInput [(ngModel)]="name" name="name" required>
+            <input matInput formControlName="name">
+            <mat-error *ngIf="checkoutForm.controls['name'].hasError('required')">
+                Name is required.
+            </mat-error>
+            <mat-error *ngIf="checkoutForm.controls['name'].hasError('minlength')">
+                Name must be at least 3 characters.
+            </mat-error>
         </mat-form-field>
 
         <mat-form-field class="full-width">
             <mat-label>Phone Number</mat-label>
-            <input matInput [(ngModel)]="phone" name="phone" required pattern="[0-9]*">
+            <input matInput formControlName="phone">
+            <mat-error *ngIf="checkoutForm.controls['phone'].hasError('required')">
+                Phone number is required.
+            </mat-error>
+            <mat-error *ngIf="checkoutForm.controls['phone'].hasError('pattern')">
+                Phone number must contain only numbers.
+            </mat-error>
+            <mat-error *ngIf="checkoutForm.controls['phone'].hasError('minlength')">
+                Phone number must be at least 10 digits.
+            </mat-error>
+            <mat-error *ngIf="checkoutForm.controls['phone'].hasError('maxlength')">
+                Phone number cannot exceed 15 digits.
+            </mat-error>
         </mat-form-field>
 
-        <button mat-raised-button type="submit" class="full-width">Checkout</button>
+        <button mat-raised-button type="submit" class="full-width" [disabled]="checkoutForm.invalid">Checkout</button>
     </form>
+
     <button mat-raised-button (click)="goBackToShopping()" class="full-width">Continue Shopping</button>
 </mat-card>
