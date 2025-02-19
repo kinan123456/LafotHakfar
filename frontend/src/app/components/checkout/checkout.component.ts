@@ -44,6 +44,23 @@ export class CheckoutComponent implements OnInit {
             this.cartItems = items;
             this.redirectIfCartEmpty();
         });
+
+        this.loadUserInfo(); // Load saved user info
+    }
+
+    /** Load saved user info from local storage */
+    private loadUserInfo(): void {
+        const userInfo = localStorage.getItem('userInfo');
+        if (userInfo) {
+            const { name, phone } = JSON.parse(userInfo);
+            this.checkoutForm.patchValue({ name, phone });
+        }
+    }
+
+    /** Save user info in local storage */
+    private saveUserInfo(): void {
+        const { name, phone } = this.checkoutForm.value;
+        localStorage.setItem('userInfo', JSON.stringify({ name, phone }));
     }
 
     /** Redirects user if cart is empty */
@@ -68,6 +85,7 @@ export class CheckoutComponent implements OnInit {
             return;
         }
 
+        this.saveUserInfo(); // Save user info for future orders
         const { name, phone } = this.checkoutForm.value;
         this.toastr.success(`Order received for ${name}. Total: ${this.total}.`, 'Order Placed');
         this.cartService.clearCart();

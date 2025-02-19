@@ -18,7 +18,7 @@
     <form [formGroup]="checkoutForm" (ngSubmit)="checkout()" class="checkout-form">
         <mat-form-field class="full-width">
             <mat-label>Name</mat-label>
-            <input matInput formControlName="name">
+            <input matInput formControlName="name" autocomplete="name">
             <mat-error *ngIf="checkoutForm.controls['name'].hasError('required')">
                 Name is required.
             </mat-error>
@@ -29,7 +29,7 @@
 
         <mat-form-field class="full-width">
             <mat-label>Phone Number</mat-label>
-            <input matInput formControlName="phone">
+            <input matInput formControlName="phone" autocomplete="tel">
             <mat-error *ngIf="checkoutForm.controls['phone'].hasError('required')">
                 Phone number is required.
             </mat-error>
