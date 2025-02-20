@@ -7,11 +7,12 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { FormsModule } from '@angular/forms';
 import { CartItem } from '../../models/cart-item';
+import { OrderSummaryComponent } from '../order-summary/order-summary.component';
 
 @Component({
     selector: 'app-cart',
     standalone: true,
-    imports: [MatDividerModule, MatCardModule, CommonModule, FormsModule],
+    imports: [MatDividerModule, MatCardModule, CommonModule, FormsModule, OrderSummaryComponent],
     templateUrl: './cart.component.html',
     styleUrls: ['./cart.component.css']
 })
