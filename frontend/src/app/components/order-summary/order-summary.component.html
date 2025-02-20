@@ -11,7 +11,8 @@
             <p class="price">{{ item.bread.price * item.quantity | currency }}</p>
         </div>
 
-        <div class="quantity-controls">
+        <!-- Show controls only if `readOnly` is false -->
+        <div class="quantity-controls" *ngIf="!readOnly">
             <button (click)="onIncrease(item.bread.id)">+</button>
             <button (click)="onDecrease(item.bread.id)">-</button>
             <button class="remove" (click)="onRemove(item.bread.id)">Remove</button>

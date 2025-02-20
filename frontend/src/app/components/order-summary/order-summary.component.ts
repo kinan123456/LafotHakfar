@@ -14,19 +14,24 @@ import { CartItem } from '../../models/cart-item';
 export class OrderSummaryComponent {
     @Input() cartItems: CartItem[] = [];
     @Input() total: number = 0;
+    @Input() readOnly: boolean = false; // Controls whether buttons are displayed
 
+    // Emit events for quantity changes & removal (used in cart, but NOT in checkout)
     @Output() increaseQuantity = new EventEmitter<string>();
     @Output() decreaseQuantity = new EventEmitter<string>();
     @Output() removeItem = new EventEmitter<string>();
 
+    // Trigger increase quantity
     onIncrease(breadId: string): void {
         this.increaseQuantity.emit(breadId);
     }
 
+    // Trigger decrease quantity
     onDecrease(breadId: string): void {
         this.decreaseQuantity.emit(breadId);
     }
 
+    // Trigger remove item
     onRemove(breadId: string): void {
         this.removeItem.emit(breadId);
     }
