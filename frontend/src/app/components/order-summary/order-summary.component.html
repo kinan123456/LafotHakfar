@@ -1,0 +1,17 @@
+<mat-card class="order-summary">
+    <h3>Order Summary</h3>
+
+    <div *ngIf="cartItems.length === 0" class="empty-summary">
+        <p>Your cart is empty.</p>
+    </div>
+
+    <div *ngFor="let item of cartItems" class="summary-item">
+        <div class="item-info">
+            <p>{{ item.bread.name }} (x{{ item.quantity }})</p>
+            <p class="price">{{ item.bread.price * item.quantity | currency }}</p>
+        </div>
+    </div>
+
+    <mat-divider></mat-divider>
+    <h4>Total: <strong>{{ total | currency }}</strong></h4>
+</mat-card>
