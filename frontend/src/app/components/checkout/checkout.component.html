@@ -5,15 +5,12 @@
         <p>Your cart is empty. Redirecting to orders page...</p>
     </div>
 
-    <div *ngFor="let item of cartItems" class="cart-item">
-        <h4>{{ item.bread.name }} (x{{ item.quantity }})</h4>
-        <p>Price: {{ item.bread.price | currency }}</p>
-        <p>Total: {{ item.bread.price * item.quantity | currency }}</p>
-    </div>
+    <app-order-summary
+        [cartItems]="cartItems"
+        [total]="total"
+        [readOnly]="true"> <!-- This makes it display-only -->
+    </app-order-summary>
 
-    <mat-divider></mat-divider>
-
-    <h4>Total: {{ total | currency }}</h4>
 
     <form [formGroup]="checkoutForm" (ngSubmit)="checkout()" class="checkout-form">
         <mat-form-field class="full-width">

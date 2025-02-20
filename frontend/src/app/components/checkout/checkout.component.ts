@@ -12,11 +12,12 @@ import { of } from 'rxjs';
 import { delay } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
 import { CartItem } from '../../models/cart-item';
+import { OrderSummaryComponent } from '../order-summary/order-summary.component';
 
 @Component({
     selector: 'app-checkout',
     standalone: true,
-    imports: [MatDividerModule, MatCardModule, CommonModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule],
+    imports: [MatDividerModule, MatCardModule, CommonModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, OrderSummaryComponent],
     templateUrl: './checkout.component.html',
     styleUrls: ['./checkout.component.css']
 })
