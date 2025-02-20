@@ -10,6 +10,12 @@
             <p>{{ item.bread.name }} (x{{ item.quantity }})</p>
             <p class="price">{{ item.bread.price * item.quantity | currency }}</p>
         </div>
+
+        <div class="quantity-controls">
+            <button (click)="onIncrease(item.bread.id)">+</button>
+            <button (click)="onDecrease(item.bread.id)">-</button>
+            <button class="remove" (click)="onRemove(item.bread.id)">Remove</button>
+        </div>
     </div>
 
     <mat-divider></mat-divider>
