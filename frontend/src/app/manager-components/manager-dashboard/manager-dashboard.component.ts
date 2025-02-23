@@ -1,18 +1,23 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
+import { MatCardModule } from '@angular/material/card';
+import { MatTabsModule } from '@angular/material/tabs';
 import { SalesInputComponent } from '../sales-input/sales-input.component';
 
 @Component({
     selector: 'app-manager-dashboard',
     standalone: true,
-    imports: [CommonModule, SalesInputComponent],
+    imports: [CommonModule, MatTabsModule, MatCardModule, SalesInputComponent],
     templateUrl: './manager-dashboard.component.html',
     styleUrls: ['./manager-dashboard.component.css']
 })
 export class ManagerDashboardComponent {
-    currentSection: 'sales' = 'sales';
+    constructor(private authService: AuthService, private router: Router) {}
 
-    showSection(section: 'sales'): void {
-        this.currentSection = section;
+    logout(): void {
+        this.authService.logout();
+        this.router.navigate(['/login']); // Redirect to login page after logout
     }
 }

@@ -1,11 +1,14 @@
-<h2>Manager Dashboard</h2>
-
-<!-- Buttons to navigate between sections -->
-<nav>
-    <button (click)="showSection('sales')">Record Sales</button>
-</nav>
-
-<!-- Dynamic section loading -->
-<div *ngIf="currentSection === 'sales'">
-    <app-sales-input></app-sales-input>
+<!-- Logout Button -->
+<div class="logout-container">
+    <button mat-raised-button color="warn" (click)="logout()">🚪 Logout</button>
 </div>
+
+<mat-card class="dashboard-container">
+    <h1 class="dashboard-title">📊 Manager Dashboard</h1>
+
+    <mat-tab-group>
+        <mat-tab label="📦 Record Sales">
+            <app-sales-input></app-sales-input>
+        </mat-tab>
+    </mat-tab-group>
+</mat-card>
