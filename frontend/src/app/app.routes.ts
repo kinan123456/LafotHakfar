@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { AuthLayoutComponent } from './components/auth-layout/auth-layout.component';
 import { MainLayoutComponent } from './components/main-layout/main-layout.component';
+import { ManagerGuard } from './guards/manager.guard';
 
 export const routes: Routes = [
     {
@@ -18,6 +19,11 @@ export const routes: Routes = [
         children: [
             { path: 'login', loadComponent: () => import('./components/login/login.component').then(m => m.LoginComponent) }
         ]
+    },
+    {
+        path: 'manager',
+        loadComponent: () => import('./manager-components/manager-dashboard/manager-dashboard.component').then(m => m.ManagerDashboardComponent),
+        canActivate: [ManagerGuard] // Only accessible for managers
     },
     { path: '**', loadComponent: () => import('./components/not-found/not-found.component').then(m => m.NotFoundComponent) }
 ];

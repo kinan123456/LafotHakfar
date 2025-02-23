@@ -14,9 +14,13 @@ import { AuthService } from '../../services/auth.service';
     templateUrl: './main-layout.component.html',
 })
 export class MainLayoutComponent {
-    constructor(public authService: AuthService) {}
+    constructor(public readonly authService: AuthService) {}
 
     logout(): void {
         this.authService.logout();
+    }
+
+    isManager() {
+        return this.authService.isManager();
     }
 }

@@ -15,7 +15,7 @@
                 <a mat-list-item routerLink="/orders" (click)="sidenav.close()">Orders</a>
                 <a mat-list-item routerLink="/cart" (click)="sidenav.close()">My Cart</a>
                 <a mat-list-item routerLink="/checkout" (click)="sidenav.close()">Checkout</a>
-                <a mat-list-item *ngIf="authService.isManager()" routerLink="/manager" (click)="sidenav.close()">Manager Dashboard</a>
+                <a mat-list-item *ngIf="isManager()" routerLink="/manager" (click)="sidenav.close()">Manager Dashboard</a>
             </mat-nav-list>
         </div>
     </mat-sidenav>
