@@ -1,0 +1,22 @@
+<h2>Sales Input</h2>
+<form [formGroup]="salesForm" (ngSubmit)="submitSales()">
+    <label>Date:</label>
+    <input type="date" formControlName="date" />
+
+    <label>Flour Weight (Kg):</label>
+    <input type="number" formControlName="flourWeightKg" />
+
+    <label>Total Breads Made:</label>
+    <input type="number" formControlName="totalBreadsMade" />
+
+    <label>Buyer Name:</label>
+    <input type="text" formControlName="buyerName" />
+
+    <label>Total Breads Bought:</label>
+    <input type="number" formControlName="breadsBought" />
+
+    <label>Amount Paid:</label>
+    <input type="number" formControlName="amountPaid" />
+
+    <button type="submit">Save Sales</button>
+</form>

@@ -1,1 +1,11 @@
 <h2>Manager Dashboard</h2>
+
+<!-- Buttons to navigate between sections -->
+<nav>
+    <button (click)="showSection('sales')">Record Sales</button>
+</nav>
+
+<!-- Dynamic section loading -->
+<div *ngIf="currentSection === 'sales'">
+    <app-sales-input></app-sales-input>
+</div>
