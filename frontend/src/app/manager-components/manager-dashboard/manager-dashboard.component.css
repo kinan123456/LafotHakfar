@@ -18,3 +18,9 @@
 mat-tab-group {
     margin-top: 20px;
 }
+
+.logout-container {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+}

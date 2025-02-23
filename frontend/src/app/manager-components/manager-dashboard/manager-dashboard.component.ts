@@ -5,11 +5,12 @@ import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatTabsModule } from '@angular/material/tabs';
 import { SalesInputComponent } from '../sales-input/sales-input.component';
+import { ExpensesInputComponent } from '../expenses-input/expenses-input.component';
 
 @Component({
     selector: 'app-manager-dashboard',
     standalone: true,
-    imports: [CommonModule, MatTabsModule, MatCardModule, SalesInputComponent],
+    imports: [CommonModule, MatTabsModule, MatCardModule, SalesInputComponent, ExpensesInputComponent],
     templateUrl: './manager-dashboard.component.html',
     styleUrls: ['./manager-dashboard.component.css']
 })

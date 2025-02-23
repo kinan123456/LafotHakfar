@@ -1,0 +1,45 @@
+<mat-card class="expenses-card">
+    <h2 class="expenses-title">📦 Record expenses</h2>
+
+    <form [formGroup]="expensesForm" (ngSubmit)="submitExpenses()" class="expenses-form">
+        <div class="form-row">
+            <mat-form-field>
+                <mat-label>Date</mat-label>
+                <input matInput type="date" formControlName="date">
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Flour Cost</mat-label>
+                <input matInput type="number" formControlName="flourCost" min="1" (keydown)="preventInvalidInput($event)" (paste)="preventPaste($event)">
+            </mat-form-field>
+        </div>
+
+        <div class="form-row">
+            <mat-form-field>
+                <mat-label>Gas cost</mat-label>
+                <input matInput type="number" formControlName="gasCost" min="1" (keydown)="preventInvalidInput($event)" (paste)="preventPaste($event)">
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Accountant Cost</mat-label>
+                <input matInput type="number" formControlName="accountantCost" min="1" (keydown)="preventInvalidInput($event)" (paste)="preventPaste($event)">
+            </mat-form-field>
+        </div>
+
+        <div class="form-row">
+            <mat-form-field>
+                <mat-label>National Insurance</mat-label>
+                <input matInput type="number" formControlName="nationalInsurance" min="1" (keydown)="preventInvalidInput($event)" (paste)="preventPaste($event)">
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Oil Cost</mat-label>
+                <input matInput type="number" formControlName="oilCost" min="1" (keydown)="preventInvalidInput($event)" (paste)="preventPaste($event)">
+            </mat-form-field>
+        </div>
+
+        <div class="button-row">
+            <button mat-raised-button color="primary" type="submit">💾 Save expenses</button>
+        </div>
+    </form>
+</mat-card>
