@@ -1,0 +1,22 @@
+<mat-card class="production-card">
+    <h3 class="production-title">🏭 Production Details</h3>
+
+    <form [formGroup]="productionForm" (ngSubmit)="submitProduction()" class="form-layout">
+        <mat-form-field appearance="outline">
+            <mat-label>Date</mat-label>
+            <input matInput type="date" formControlName="date">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Flour Weight (Kg)</mat-label>
+            <input matInput type="number" formControlName="flourWeightKg" min="1">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Total Breads Made</mat-label>
+            <input matInput type="number" formControlName="totalBreadsMade" min="1">
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" type="submit">💾 Save Production</button>
+    </form>
+</mat-card>

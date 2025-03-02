@@ -1,4 +1,4 @@
-.sales-card {
+.production-card {
     margin-bottom: 20px;
     padding: 15px;
     border-radius: 8px;
@@ -7,7 +7,7 @@
     text-align: center;
 }
 
-.sales-title {
+.production-title {
     font-size: 18px;
     font-weight: bold;
     color: #333;
