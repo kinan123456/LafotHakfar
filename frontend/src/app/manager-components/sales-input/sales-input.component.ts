@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
-import { ToastrService } from 'ngx-toastr';
+import { Validators } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
+import { BaseFormComponent } from '../../shared/base-form/base-form.component';
 
 @Component({
     selector: 'app-sales-input',
@@ -13,20 +14,20 @@ import { CommonModule } from '@angular/common';
     templateUrl: './sales-input.component.html',
     styleUrls: ['./sales-input.component.css']
 })
-export class SalesInputComponent {
-    salesForm: FormGroup = new FormGroup({
-        buyerName: new FormControl('', [Validators.required]),
-        breadsBought: new FormControl(1, [Validators.required, Validators.min(1)]),
-        amountPaid: new FormControl(1, [Validators.required, Validators.min(1)])
-    });
+export class SalesInputComponent extends BaseFormComponent {
+    initForm(): void {
+        this.form = this.fb.group({
+            buyerName: ['', [Validators.required]],
+            breadsBought: [1, [Validators.required, Validators.min(1)]],
+            amountPaid: [1, [Validators.required, Validators.min(1)]]
+        });
+    }
 
-    constructor(private toastr: ToastrService) {}
-
-    submitSales(): void {
-        if (this.salesForm.invalid) {
-            this.toastr.error('Please fill all fields correctly!', 'Validation Error');
-            return;
-        }
-        this.toastr.success('Sales data saved successfully!', '✅ Success');
+    submitForm(): void {
+        // Simulate API call
+        setTimeout(() => {
+            this.toastr.success('Sales data saved successfully!', '✅ Success');
+            this.resetForm();
+        }, 1000);
     }
 }
