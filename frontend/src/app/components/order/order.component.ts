@@ -35,20 +35,20 @@ export class OrderComponent implements OnInit {
         this.loadSelectedBreads();
     }
 
-    loadBreads(): void {
+    private loadBreads(): void {
         this.orderService.getBreads().subscribe(breads => {
             this.breads = breads;
         });
     }
 
-    loadSelectedBreads(): void {
+    private loadSelectedBreads(): void {
         const storedSelection = localStorage.getItem('selectedBreads');
         if (storedSelection) {
             this.selectedBreads = JSON.parse(storedSelection);
         }
     }
 
-    saveSelectedBreads(): void {
+    private saveSelectedBreads(): void {
         localStorage.setItem('selectedBreads', JSON.stringify(this.selectedBreads));
     }
 
