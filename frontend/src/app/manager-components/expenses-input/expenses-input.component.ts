@@ -1,6 +1,6 @@
 // expenses-input.component.ts
 import { Component } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
@@ -18,14 +18,35 @@ import { BaseFormComponent } from '../../shared/base-form/base-form.component';
 })
 export class ExpensesInputComponent extends BaseFormComponent {
     initForm(): void {
-        this.form = this.fb.group({
-            date: [new Date().toISOString().split('T')[0], [Validators.required]],
-            flourCost: [1, [Validators.required, Validators.min(1)]],
-            gasCost: [1, [Validators.required, Validators.min(1)]],
-            accountantCost: [1, [Validators.required, Validators.min(1)]],
-            nationalInsurance: [1, [Validators.required, Validators.min(1)]],
-            oilCost: [1, [Validators.required, Validators.min(1)]]
-        });
+        this.form = this.fb.group(
+            {
+                date: [new Date().toISOString().split('T')[0], [Validators.required]],
+                flourCost: [null], // Initially empty (allow optional)
+                gasCost: [null],
+                accountantCost: [null],
+                nationalInsurance: [null],
+                oilCost: [null]
+            },
+            { validators: this.atLeastOneCostRequired() }
+        );
+    }
+    
+    /** Custom Validator: At least one cost field must be filled */
+    private atLeastOneCostRequired(): ValidatorFn {
+        return (control: AbstractControl): ValidationErrors | null => {
+            const { flourCost, gasCost, accountantCost, nationalInsurance, oilCost } = control.value;
+    
+            // Check if at least one field has a positive number
+            if (
+                [flourCost, gasCost, accountantCost, nationalInsurance, oilCost].some(
+                    (value) => value !== null && value !== undefined && value > 0
+                )
+            ) {
+                return null; // Form is valid
+            }
+    
+            return { atLeastOneRequired: true }; // Return error if all are empty or zero
+        };
     }
 
     submitForm(): void {
