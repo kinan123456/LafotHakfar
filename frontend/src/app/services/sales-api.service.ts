@@ -23,8 +23,7 @@ export class SalesApiService {
         );
     }
 
-    // Add a new sale record
-    addSaleInput(sale: SaleRecord): Observable<SaleRecord> {
+    saveNewSaleRecord(sale: SaleRecord): Observable<SaleRecord> {
         return this.http.post<SaleRecord>(this.apiUrl + "/SaveNewSaleRecord", sale);
     }
 

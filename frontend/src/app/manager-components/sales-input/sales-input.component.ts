@@ -35,7 +35,7 @@ export class SalesInputComponent extends BaseFormComponent {
     submitForm(): void {
         const saleRecord: SaleRecord = this.form.value;
 
-        this.salesApiService.addSaleInput(saleRecord).pipe(untilDestroyed(this)).subscribe({
+        this.salesApiService.saveNewSaleRecord(saleRecord).pipe(untilDestroyed(this)).subscribe({
             next: () => {
               this.toastr.success('Sales record added successfully!', '✅ Success');
               this.resetAll();
