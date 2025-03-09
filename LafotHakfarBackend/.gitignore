@@ -1,0 +1,51 @@
+
+
+
+
+# Ignore Visual Studio-specific files
+.vs/
+.vscode/
+*.code-workspace
+
+# Ignore build output (DLLs, EXEs, etc.)
+bin/
+obj/
+
+# Ignore User-Specific Files
+*.user
+*.suo
+*.userosscache
+*.sln.cache
+*.sln.ide
+*.sln.docstates
+
+# Ignore Rider IDE files
+.idea/
+
+# Ignore Logs and Debugging Files
+logs/
+*.log
+*.tlog
+*.ilk
+*.pdb
+*.exp
+
+# Ignore Resharper & Rider Configs
+_ReSharper.Caches/
+*.DotSettings.user
+*.ncrunchsolution
+
+# Ignore temporary files
+*.bak
+*.tmp
+*.swp
+*.swo
+*.sln.cache
+
+# Ignore Environment Secrets & Config Files
+appsettings.Development.json
+secrets.json
+
+# Ignore Published Builds
+publish/
+wwwroot/
