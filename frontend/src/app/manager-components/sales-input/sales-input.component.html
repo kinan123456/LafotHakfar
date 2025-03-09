@@ -3,6 +3,13 @@
 
     <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-layout">
         <mat-form-field appearance="outline">
+            <mat-label>Date</mat-label>
+            <input matInput type="date" formControlName="date" aria-label="Date">
+            <mat-error *ngIf="form.get('date')?.hasError('required')">
+                Date is required.
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
             <mat-label>Buyer Name</mat-label>
             <input matInput type="text" formControlName="buyerName" aria-label="Buyer Name">
             <mat-error *ngIf="form.get('buyerName')?.hasError('required')">

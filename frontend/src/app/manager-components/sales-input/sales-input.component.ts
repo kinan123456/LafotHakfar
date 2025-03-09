@@ -26,6 +26,7 @@ export class SalesInputComponent extends BaseFormComponent {
 
     initForm(): void {
         this.form = this.fb.group({
+            date: [new Date().toISOString().split('T')[0], [Validators.required]],
             buyerName: ['', [Validators.required]],
             breadsBought: [1, [Validators.required, Validators.min(1)]],
             amountPaid: [1, [Validators.required, Validators.min(1)]]
