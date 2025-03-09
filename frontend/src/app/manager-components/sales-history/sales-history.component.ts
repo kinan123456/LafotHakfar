@@ -9,15 +9,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { CommonModule } from '@angular/common';
 import { ViewChild } from '@angular/core';
-import { SalesHistoryService } from '../../services/sales-history.service';
 import { MatCardModule } from '@angular/material/card';
-
-export interface SaleRecord {
-    date: string;
-    buyerName: string;
-    breadsBought: number;
-    amountPaid: number;
-}
+import { SaleRecord } from '../../models/sale-record';
+import { SalesApiService } from '../../services/sales-api.service';
 
 @Component({
     selector: 'app-sales-history',
@@ -42,17 +36,27 @@ export class SalesHistoryComponent implements OnInit {
 
     @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-    constructor(private salesHistoryService: SalesHistoryService) {
+    constructor(private readonly salesApiService: SalesApiService) {
         this.dataSource = new MatTableDataSource<SaleRecord>([]);
     }
 
     ngOnInit(): void {
-        this.loadSalesHistory();
+        this.listenForSalesHistoryUpdates();
+        this.refetchSaleRecordsHistory();
     }
 
-    loadSalesHistory(): void {
-        this.dataSource.data = this.salesHistoryService.getSalesHistory();
-        this.dataSource.paginator = this.paginator;
+    private listenForSalesHistoryUpdates(): void {
+        this.salesApiService.salesHistory$.subscribe((sales) => {
+            this.dataSource.data = sales;
+            if (this.paginator) {
+                this.dataSource.paginator = this.paginator;
+            }
+        });
+    }
+
+    // Ensure fresh data is loaded on component activation.
+    refetchSaleRecordsHistory(): void {
+        this.salesApiService.refetchSalesRecordsHistory().subscribe();
     }
 
     applyFilter(event: Event) {
@@ -62,13 +66,13 @@ export class SalesHistoryComponent implements OnInit {
 
     deleteRecord(record: SaleRecord): void {
         if (confirm(`Are you sure you want to delete the sale of ${record.buyerName} on ${record.date}?`)) {
-            this.salesHistoryService.deleteRecord(record);
-            this.loadSalesHistory();
+            this.salesApiService.deleteRecord(record);
+            this.refetchSaleRecordsHistory();
         }
     }
 
     exportToCSV() {
-        const csvData = this.salesHistoryService.convertToCSV(this.dataSource.data);
+        const csvData = this.salesApiService.convertToCSV(this.dataSource.data);
         const blob = new Blob([csvData], { type: 'text/csv' });
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement('a');

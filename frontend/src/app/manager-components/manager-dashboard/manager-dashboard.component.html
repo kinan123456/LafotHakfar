@@ -6,7 +6,7 @@
 <mat-card class="dashboard-container">
     <h1 class="dashboard-title">📊 Manager Dashboard</h1>
 
-    <mat-tab-group>
+    <mat-tab-group (selectedTabChange)="onTabChange($event)">
         <mat-tab label="🏭 Production">
             <app-production-input></app-production-input>
         </mat-tab>
@@ -20,7 +20,7 @@
         </mat-tab>
 
         <mat-tab label="📜 Sales History">
-            <app-sales-history></app-sales-history>
+            <app-sales-history #salesHistory></app-sales-history>
         </mat-tab>
     </mat-tab-group>
 </mat-card>
